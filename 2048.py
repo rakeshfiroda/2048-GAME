@@ -9,30 +9,27 @@ p2 = rd.randint(0,3)
 output[p1][p2] = elements[rd.randint(0,3)]
 position[p1][p2] = 1
 
+
+        
 def add_element():
     status = 0
-    for i in range(0,4):
-        for j in range(0,4):
+    for i in range(4):
+        for j in range(4):
             if position[i][j] == 0:
                 status = 1
                 break
-    if status == 1:
+        if status == 1:
+            break
+    if status:        
         while status:
             x,y = rd.randint(0,3),rd.randint(0,3)
             status = position[x][y]
         output[x][y] = elements[rd.randint(0,3)]
+        position[x][y] = 1
     else:
         print("Game Over! No space available...")
-  
-def add_element():
-    status = 1
     
-    while status:
-        x,y = rd.randint(0,3),rd.randint(0,3)
-        status = position[x][y]
-    output[x][y] = elements[rd.randint(0,3)]
-    position[x][y] = 1
-    
+    return status 
     
 def operation_a(score):
     for i in range(0,4):
@@ -49,7 +46,7 @@ def operation_a(score):
                         output[i][k] = 0
                         position[i][k] = 0
                         score = score + output[i][k-1]
-    add_element()
+    
     return score
 
 def operation_d(score):
@@ -67,7 +64,7 @@ def operation_d(score):
                         output[i][k] = 0
                         position[i][k] = 0
                         score = score + output[i][k+1]
-    add_element()
+    
     return score
 
 def operation_w(score):
@@ -85,7 +82,7 @@ def operation_w(score):
                         output[k][i] = 0
                         position[k][i] = 0
                         score = score + output[k-1][i]
-    add_element()
+    
     return score
 
 def operation_s(score):
@@ -103,17 +100,29 @@ def operation_s(score):
                         output[k][i] = 0
                         position[k][i] = 0
                         score = score + output[k+1][i]
-    add_element()
+                        
     return score
 
+def show(arr):
+    print("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|")
+    for i in range(4):
+        print("|",end="")
+        for j in range(4):
+            print('{:5}'.format(int(arr[i][j])),end=" ")
+        print("|")
+    print("|________________________|")
+    print()
+    
+    
 print("*DOCUMENTATION*")
 print("Use W,A,S,D to Move and E to exit()")
 add_element()
 score = 0
 user = 1
 while user!= 'E':
+    print()
     print("Your Score:",int(score))
-    print(output)
+    show(output)
     user = input("Enter Operation: ").upper()
     if user == 'W':
         score = operation_w(score)
@@ -123,7 +132,9 @@ while user!= 'E':
         score = operation_s(score)
     elif user == 'D':
         score = operation_d(score)
-        
+    elif user != 'E':
+        print("Wrong Operation!!!")
+    add_element()
     if score >= 2048:
         break
         
@@ -132,46 +143,3 @@ if score>= 2048:
     print("Congrats! You finished it.")
 else:
     print("ThankYou! Its yours, You can try again!")
-    
-
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
